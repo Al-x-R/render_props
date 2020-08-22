@@ -1,59 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from "prop-types";
 
-class PhonesList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isFetching: false,
-            phones: []
-        }
-    }
+function PhonesList(props) {
 
-    getPhones = () => {
-        this.setState({
-            isFetching: true
-        })
-        fetch('./phones.json')
-            .then(res => res.json())
-            .then(data => {
-            this.setState({
-                phones: data,
-                isFEtching: false
-            })
-        }).catch(error => {
-            this.setState({
-                error,
-                isFetching: false
-            })
-        })
-    }
+    const {phones} = props
 
-    componentDidMount() {
-        this.getPhones()
-    }
+    return (
+        <div>
+            <ul>
+                {
+                    phones.map(phone => {
+                        return <li key={phone.id}>{phone.brand} {phone.model}</li>
+                    })
+                }
+            </ul>
+        </div>
+    );
+}
 
-    render() {
-        const {phones, isFetching, error} = this.state
-
-        if(error) {
-            return alert(error.message)
-        }
-        // if (isFetching) {
-        //     return <div>Loading...</div>
-        // }
-        return (
-            <div>
-                <ul>
-                    {
-                        phones.map(phone => {
-                            return <li key={phone.id}>{phone.brand} {phone.model}</li>
-                        })
-                    }
-                </ul>
-            </div>
-        );
-    }
+PhonesList.propTypes = {
+    phones: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        model: PropTypes.string.isRequired,
+        brand: PropTypes.string.isRequired,
+    }))
 }
 
 export default PhonesList;
