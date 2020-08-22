@@ -34,16 +34,14 @@ class DataProvider extends Component {
     }
 
     render() {
-        return (
-            <div>
-
-            </div>
-        );
+        const {children} = this.props
+        return children(this.state)
     }
 }
 
 DataProvider.propTypes = {
-    getData: PropTypes.func.isRequired
+    getData: PropTypes.func.isRequired,
+    children: PropTypes.func.isRequired,
 
 }
 
