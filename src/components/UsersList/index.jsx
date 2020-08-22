@@ -1,59 +1,29 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from "prop-types";
 
-class UsersList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isFetching: false,
-            users: [],
-            error: null,
-        }
-    }
+function UsersList(props) {
+    const {users} = props
 
-    getUsers = () => {
-        this.setState({
-            isFetching: true,
-        })
-        fetch('./users.json')
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    users: data,
-                    isFetching: false,
-                })
-            }).catch(error => {
-            this.setState({
-                error,
-                isFetching: false,
-            })
-        })
-    }
+    return (
+        <div>
+            <h1>Users</h1>
+            <ul>
+                {
+                    users.map(user => {
+                        return <li key={user.id}>{user.firstName} {user.lastName}</li>
+                    })
+                }
+            </ul>
+        </div>
+    );
+}
 
-    componentDidMount() {
-        this.getUsers()
-    }
-
-    render() {
-        const {users, isFetching, error} = this.state
-
-        if (error) {
-            return alert(error.message)
-        }
-        if (isFetching) {
-            return <div>Loading...</div>
-        }
-        return (
-            <div>
-                <ul>
-                    {
-                        users.map(user => {
-                            return <li key={user.id}>{user.firstName} {user.lastName}</li>
-                        })
-                    }
-                </ul>
-            </div>
-        );
-    }
+UsersList.propTypes = {
+    users: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        lastName: PropTypes.string.isRequired,
+        firstName: PropTypes.string.isRequired,
+    })).isRequired,
 }
 
 export default UsersList;
