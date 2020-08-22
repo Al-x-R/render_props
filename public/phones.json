@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "brand": "Iphone",
+    "model": "X"
+  },
+  {
+    "id": 2,
+    "brand": "Iphone",
+    "model": "11 Pro"
+  },
+  {
+    "id": 3,
+    "brand": "Iphone",
+    "model": "11 Pro Max"
+  }
+]
